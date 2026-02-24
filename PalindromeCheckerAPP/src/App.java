@@ -1,49 +1,61 @@
 /**
- * ---------------------------------------------------------------
- * MAIN CLASS - UseCase1PalindromeCheckerApp
- * ---------------------------------------------------------------
- *
- * Use Case 1: Application Entry & Welcome Message
- * Use Case 2: Hardcoded Palindrome Validation
- *
- * @author user69
- * @version 1.0
- */
-
-public class App {
+        * =============================================================================
+        * SERVICE CLASS - PalindromeService
+ * =============================================================================
+         * Encapsulates the core logic for palindrome validation.
+        */
+class PalindromeService {
 
     /**
-     * Application entry point.
-     *
-     * @param args Command-line arguments
+     * Checks if a string is a palindrome.
+     * This method is reusable by any part of the application.
      */
-    public static void main(String[] args) {
-
-        System.out.println("     Welcome to Palindrome Checker     ");
-
-        // Display Application Details
-        System.out.println("Application Name : PalindromeChecker App");
-        System.out.println("Version          : 1.0");
-        System.out.println("System ready for palindrome validation...\n");
-
-        // -------------------------------
-        // UC2: Hardcoded Palindrome Check
-        // -------------------------------
-
-        String input = "madam";
-        boolean isPalindrome = true;
-
-        // Loop only till half of the string length
-        for (int i = 0; i < input.length() / 2; i++) {
-
-            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
+    public boolean check(String input) {
+        if (input == null || input.isEmpty()) {
+            return false;
         }
 
-        // Print result
-        System.out.println("Input text: " + input);
-        System.out.println("Is it a Palindrome? : " + isPalindrome);
+        // Normalize string (handling case and non-alphanumeric characters)
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        int start = 0;
+        int end = clean.length() - 1;
+
+        while (start < end) {
+            if (clean.charAt(start) != clean.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+}
+
+/**
+ * =============================================================================
+ * MAIN CLASS - UseCase11PalindromeCheckerApp
+ * =============================================================================
+ * * Use Case 11: Object-Oriented Palindrome Service
+ * * Description:
+ * This class demonstrates Encapsulation by delegating logic
+ * to a separate service class.
+ * * @author St0x0net
+ * @version 11.0
+ */
+public class UseCase11PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+        // Instantiate the service object
+        PalindromeService service = new PalindromeService();
+
+        String testString = "Race Car";
+
+        // Use the service to check the palindrome
+        boolean result = service.check(testString);
+
+        // Display results
+        System.out.println("Input        : " + testString);
+        System.out.println("Is Palindrome: " + result);
     }
 }
