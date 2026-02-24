@@ -1,49 +1,65 @@
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Stack;
+
 /**
- * ---------------------------------------------------------------
- * MAIN CLASS - UseCase1PalindromeCheckerApp
- * ---------------------------------------------------------------
+ * ==========================================================
+ *  MAIN CLASS - UseCase6PalindromeCheckerApp
+ * ==========================================================
  *
- * Use Case 1: Application Entry & Welcome Message
- * Use Case 2: Hardcoded Palindrome Validation
+ * Use Case 6: Queue + Stack Fairness Check
  *
- * @author user69
- * @version 1.0
+ * Description:
+ * This class demonstrates palindrome validation using
+ * two different data structures:
+ *
+ * - Queue (FIFO)
+ * - Stack (LIFO)
+ *
+ * Characters are inserted into both structures and then
+ * compared by removing from the front of the queue and
+ * the top of the stack.
+ *
+ * @author St0x0net
+ * @version 6.0
  */
 
 public class App {
 
     /**
-     * Application entry point.
-     *
+     * Application entry point for UC6.
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
-        System.out.println("     Welcome to Palindrome Checker     ");
+        // Define the input string to validate
+        String input = "civic";
 
-        // Display Application Details
-        System.out.println("Application Name : PalindromeChecker App");
-        System.out.println("Version          : 1.0");
-        System.out.println("System ready for palindrome validation...\n");
+        // Create a Queue (FIFO)
+        Queue<Character> queue = new LinkedList<>();
 
-        // -------------------------------
-        // UC2: Hardcoded Palindrome Check
-        // -------------------------------
+        // Create a Stack (LIFO)
+        Stack<Character> stack = new Stack<>();
 
-        String input = "madam";
+        // Insert each character into both queue and stack
+        for (char c : input.toCharArray()) {
+            queue.add(c);      // Enqueue
+            stack.push(c);     // Push
+        }
+
+        // Flag to track palindrome status
         boolean isPalindrome = true;
 
-        // Loop only till half of the string length
-        for (int i = 0; i < input.length() / 2; i++) {
-
-            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
+        // Compare dequeue (queue) vs pop (stack)
+        while (!queue.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Print result
-        System.out.println("Input text: " + input);
-        System.out.println("Is it a Palindrome? : " + isPalindrome);
+        // Display output exactly as shown in your example
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
